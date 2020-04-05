@@ -5,28 +5,31 @@ from rest_framework import permissions
 from datetime import datetime, timedelta
 from django.conf import settings
 from entities import models
+from applicationlayer import utils
+from django.conf import settings
+import requests
 
 
-class AppTokenAuthentication(TokenAuthentication):
+class GatewayContextAuthentication(TokenAuthentication):
     keyword = 'Bearer'
 
     def authenticate_credentials(self, key):
 
-        user_session = models.UserSession.objects.filter(token=key).first()
+        user_context = None
 
-        if not user_session:
-            raise exceptions.AuthenticationFailed('Invalid token')
+        # FETCH current user's context
+        response = requests.get(settings.SERVICE_CONTEXT_HOST + '/api/v1/auth/current-user-context/', headers={"Authorization": self.keyword + ' ' + key})
 
-        if user_session.expires < datetime.now():
-            raise exceptions.AuthenticationFailed('Token has expired')
+        if response.status_code == 200:
+            user_context = response.json()
+        else:
+            message = response.json()
+            if 'detail' in message:
+                message = message['detail']
 
-        user_session.expires = datetime.now() + timedelta(hours=1)
-        user_session.save()
+            raise exceptions.AuthenticationFailed(message)
 
-        set_current_user(user_session.user)
-
-        return (user_session.user,
-                user_session)
+        return (user_context, key)
 
 
 class IsAuthenticated(permissions.BasePermission):        
@@ -34,7 +37,19 @@ class IsAuthenticated(permissions.BasePermission):
     def has_permission(self, request, view):
         if not request.user:
             return False
-        return True
+
+        if request.user['is_administrator']:
+            return True
+
+        inputs = utils.get_request_inputs(request)
+        user = request.user
+
+        permissions = user['application']['permissions'] + user['application']['external_permissions']
+
+        return len(
+            list(filter(lambda item: item['url'] == inputs.get('client_path') and item['method'] == inputs.get('client_method'),
+                        permissions))
+        ) > 0
 
 
 class AllowAny(permissions.BasePermission):        

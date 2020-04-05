@@ -130,7 +130,7 @@ REST_FRAMEWORK = {
         'middleware.security.AllowAny',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'middleware.security.AppTokenAuthentication'
+        'middleware.security.GatewayContextAuthentication'
     ],
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_PAGINATION_CLASS': 'applicationlayer.paginator.SimplePageNumberPagination',
@@ -141,3 +141,5 @@ REST_FRAMEWORK = {
 
 CORS_ORIGIN_ALLOW_ALL = True
 SESSION_TIMEOUT = 3600
+
+SERVICE_CONTEXT_HOST = 'http://127.0.0.1:8001'

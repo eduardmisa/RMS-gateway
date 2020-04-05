@@ -11,6 +11,7 @@ class SimplePageNumberPagination(pagination.PageNumberPagination):
     page_query_param = 'page'
     page_size_query_param = 'page-size'
     max_page_size = 50
+    # page_size = 10
 
     invalid_page_message = _('Invalid page.')
 
@@ -49,25 +50,13 @@ class SimplePageNumberPagination(pagination.PageNumberPagination):
         return list(self.page)
 
 
-
-
-
-
-
-
-
-
-
-
-
     def get_paginated_response(self, data, additional_info=None):
         content = [
             ('count', self.page.paginator.count),
-            ('next', self.get_next_link()),
-            ('previous', self.get_previous_link()),
-            ('results', data),
             ('page', self.page.number),
-            ('additional_info', additional_info)
+            ('page_size', self.get_page_size(self.request)),
+            ('additional_info', additional_info),
+            ('results', data),
         ]
         return Response(OrderedDict(content))
 
