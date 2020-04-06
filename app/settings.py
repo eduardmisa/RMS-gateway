@@ -11,25 +11,31 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+import configparser
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
+
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Reads app config
+config = configparser.ConfigParser()
+config_file = os.path.join(BASE_DIR, 'env.ini')
+config.read(config_file)
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '+x5)i%%ich2uqn9^y0scn$j&9znzh7&bpj9!yw)7js5d4hb@m('
+SECRET_KEY = config['APPLICATION']['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config['APPLICATION']['DEBUG']
 
+# SECURITY WARNING: Filter hosts that are allowed to access this application
 ALLOWED_HOSTS = ['*']
-
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
-
 INSTALLED_APPS = [
     # 'django.contrib.admin',
     # 'django.contrib.auth',
@@ -83,21 +89,19 @@ WSGI_APPLICATION = 'app.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'apitemplatedb',
-        'USER': 'root',
-        'PASSWORD': 'p@ssw0rd',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
+        'ENGINE': config['DATABASE']['DATABASE_ENGINE'],
+        'NAME': config['DATABASE']['DATABASE_NAME'],
+        'USER': config['DATABASE']['DATABASE_USER'],
+        'PASSWORD': config['DATABASE']['DATABASE_PASSWORD'],
+        'HOST': config['DATABASE']['DATABASE_HOST'],
+        'PORT': config['DATABASE']['DATABASE_PORT'],
     }
 }
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'Asia/Singapore'
@@ -111,11 +115,7 @@ USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
-
 STATIC_URL = '/static/'
-
-
-# CORS_ORIGIN_ALLOW_ALL = True
 
 # REST_SESSION_LOGIN = True
 
@@ -139,7 +139,5 @@ REST_FRAMEWORK = {
     'UNAUTHENTICATED_USER': None
 }
 
-CORS_ORIGIN_ALLOW_ALL = True
-SESSION_TIMEOUT = 3600
-
-SERVICE_CONTEXT_HOST = 'http://127.0.0.1:8001'
+SESSION_TIMEOUT = config['APPLICATION']['SESSION_TIMEOUT']
+SERVICE_CONTEXT_HOST = config['APPLICATION']['SERVICE_CONTEXT_HOST']

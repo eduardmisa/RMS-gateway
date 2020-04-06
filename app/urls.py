@@ -18,8 +18,5 @@ from django.urls import path, include, re_path
 from applicationlayer.mapper import views
 
 urlpatterns = [
-    # path('api/v1/auth/', include('applicationlayer.security.urls')),
-    # path('api/v1/management/', include('applicationlayer.management.urls')),
-
     re_path(r'$', views.EntryPoint.as_view(), name="API Entrypoint"),
 ]
