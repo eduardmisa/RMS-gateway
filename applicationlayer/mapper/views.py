@@ -23,6 +23,7 @@ class EntryPoint(APIView):
                          'delete']
 
     def get_request_headers(self, request):
+        return {"Authorization": 'Bearer ' + request.auth}
         token = False if not request.auth else request.auth
         if token:
             return {"Authorization": 'Bearer ' + token}
