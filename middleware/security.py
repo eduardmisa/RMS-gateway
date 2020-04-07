@@ -42,7 +42,7 @@ class IsAuthenticated(permissions.BasePermission):
 
         # Is Login
         if inputs['client_path'] == '/api/v1/auth/login/':
-            return False
+            return True
 
         auth = request.headers.get("Authorization")
 

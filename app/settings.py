@@ -127,7 +127,7 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'middleware.security.IsAuthenticated',
-        'middleware.security.AllowAny',
+        # 'middleware.security.AllowAny',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         # 'middleware.security.GatewayContextAuthentication'
