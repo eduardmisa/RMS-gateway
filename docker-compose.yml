@@ -4,7 +4,7 @@ services:
   rms_gateway_service:
     image: rms_gateway_image:latest
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:8009
     container_name: rms_gateway_container
     volumes:
       - .:/rms_gateway_volume
