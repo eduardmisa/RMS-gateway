@@ -10,39 +10,59 @@ from django.conf import settings
 import requests
 
 
-class GatewayContextAuthentication(TokenAuthentication):
-    keyword = 'Bearer'
+# class GatewayContextAuthentication(TokenAuthentication):
+#     keyword = 'Bearer'
 
-    def authenticate_credentials(self, key):
+#     def authenticate_credentials(self, key):
 
-        user_context = None
+#         user_context = None
 
-        # FETCH current user's context
-        response = requests.get(settings.SERVICE_CONTEXT_HOST + '/api/v1/auth/current-user-context/', headers={"Authorization": self.keyword + ' ' + key})
+#         # FETCH current user's context
+#         response = requests.get(settings.SERVICE_CONTEXT_HOST + '/api/v1/auth/current-user-context/', headers={"Authorization": self.keyword + ' ' + key})
 
-        if response.status_code == 200:
-            user_context = response.json()
-        else:
-            message = response.json()
-            if 'detail' in message:
-                message = message['detail']
+#         if response.status_code == 200:
+#             user_context = response.json()
+#         else:
+#             message = response.json()
+#             if 'detail' in message:
+#                 message = message['detail']
 
-            raise exceptions.AuthenticationFailed(message)
+#             raise exceptions.AuthenticationFailed(message)
 
-        return (user_context, key)
+#         return (user_context, key)
 
 
 class IsAuthenticated(permissions.BasePermission):        
 
     def has_permission(self, request, view):
-        if not request.user:
+
+        user_context = None
+
+        auth = request.headers.get("Authorization")
+
+        if auth:
+
+            key = auth.replace('Bearer ', '')
+
+            # FETCH current user's context
+            response = requests.get(settings.SERVICE_CONTEXT_HOST + '/api/v1/auth/current-user-context/', headers={"Authorization": 'Bearer ' + key})
+            if response.status_code == 200:
+                user_context = response.json()
+            else:
+                message = response.json()
+                if 'detail' in message:
+                    message = message['detail']
+                raise exceptions.AuthenticationFailed(message)
+
+
+        if not user_context:
             return False
 
-        if request.user['is_administrator']:
+        if user_context['is_administrator']:
             return True
 
         inputs = utils.get_request_inputs(request)
-        user = request.user
+        user = user_context
 
         permissions = user['application']['permissions'] + user['application']['external_permissions']
 

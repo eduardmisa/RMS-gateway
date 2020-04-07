@@ -130,7 +130,7 @@ REST_FRAMEWORK = {
         'middleware.security.AllowAny',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'middleware.security.GatewayContextAuthentication'
+        # 'middleware.security.GatewayContextAuthentication'
     ],
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_PAGINATION_CLASS': 'applicationlayer.paginator.SimplePageNumberPagination',
