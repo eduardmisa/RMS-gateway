@@ -9,7 +9,7 @@ services:
     volumes:
       - .:/rms_gateway_volume
     ports:
-      - "8002:80092
+      - "8002:8002
 
 networks:
     default:
