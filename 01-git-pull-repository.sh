@@ -1,7 +1,7 @@
-set password "repository_admin_password"
+set password "531ed96864Z"
 
-cd /var/www/template.templatesystem.com
-spawn git pull "http://admin@gitserver:80/scm/template_app.git" master
+cd /var/www/rms-gateway.u4rdsystem.com
+spawn git pull "https://eduardmisa@github.com/eduardmisa/RMS-gateway.git" master
 expect "Password for"
 send "$password\n"
 interact
