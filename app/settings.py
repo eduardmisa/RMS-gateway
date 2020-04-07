@@ -126,11 +126,11 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.AdminRenderer',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
-        'middleware.security.IsAuthenticated',
-        'middleware.security.AllowAny',
+        # 'middleware.security.IsAuthenticated',
+        # 'middleware.security.AllowAny',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'middleware.security.GatewayContextAuthentication'
+        # 'middleware.security.GatewayContextAuthentication'
     ],
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_PAGINATION_CLASS': 'applicationlayer.paginator.SimplePageNumberPagination',
