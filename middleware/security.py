@@ -38,6 +38,12 @@ class IsAuthenticated(permissions.BasePermission):
 
         user_context = None
 
+        inputs = utils.get_request_values(request)
+
+        # Is Login
+        if inputs['client_path'] == '/api/v1/auth/login/':
+            return False
+
         auth = request.headers.get("Authorization")
 
         if auth:
@@ -54,14 +60,13 @@ class IsAuthenticated(permissions.BasePermission):
                     message = message['detail']
                 raise exceptions.AuthenticationFailed(message)
 
-
         if not user_context:
             return False
 
         if user_context['is_administrator']:
             return True
 
-        inputs = utils.get_request_inputs(request)
+        
         user = user_context
 
         permissions = user['application']['permissions'] + user['application']['external_permissions']
