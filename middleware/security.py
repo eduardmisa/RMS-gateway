@@ -41,8 +41,8 @@ class IsAuthenticated(permissions.BasePermission):
         inputs = utils.get_request_values(request)
 
         # Is Login
-        rms_context_allowed_urls = ['/api/v1/auth/login/', 
-                                    '/auth/current-user-context/']
+        rms_context_allowed_urls = set(['/api/v1/auth/login/', 
+                                        '/api/v1/auth/current-user-context/'])
 
         if inputs['client_path'] in rms_context_allowed_urls:
             return True
