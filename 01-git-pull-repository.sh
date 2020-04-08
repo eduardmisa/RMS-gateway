@@ -1,11 +1,11 @@
-# !/bin/bash
-
-source ./0-configuration.sh
-
-set password "531ed96864Z"
+set DEPLOYMENT_PATH [lindex $argv 0]
+set GIT_LINK [lindex $argv 1]
+set GIT_BRANCH [lindex $argv 2]
+set GIT_PASSWORD [lindex $argv 3]
 
 cd $DEPLOYMENT_PATH
-spawn git pull "https://eduardmisa@github.com/eduardmisa/RMS-gateway.git" master
+
+spawn git pull "$GIT_LINK" $GIT_BRANCH
 expect "Password for"
-send "$password\n"
+send "$GIT_PASSWORD\n"
 interact

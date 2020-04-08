@@ -1,5 +1,3 @@
-# !/bin/bash
-
 source ./0-configuration.sh
 
 echo "===============================================================";
@@ -17,4 +15,3 @@ echo "===============================================================";
 
 cd $DEPLOYMENT_PATH
 docker-compose -f docker-compose.yml up -d --build
-
