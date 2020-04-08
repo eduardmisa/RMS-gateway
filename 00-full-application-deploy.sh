@@ -1,3 +1,5 @@
+# !/bin/bash
+
 source ./0-configuration.sh
 
 expect 01-git-pull-repository.sh

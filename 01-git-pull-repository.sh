@@ -1,3 +1,5 @@
+# !/bin/sh
+
 source ./0-configuration.sh
 
 set password "531ed96864Z"
