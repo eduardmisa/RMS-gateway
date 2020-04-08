@@ -8,6 +8,7 @@ from entities import models
 from applicationlayer import utils
 from django.conf import settings
 import requests
+import re
 
 
 # class GatewayContextAuthentication(TokenAuthentication):
@@ -32,7 +33,11 @@ import requests
 #         return (user_context, key)
 
 
-class IsAuthenticated(permissions.BasePermission):        
+class IsAuthenticated(permissions.BasePermission):  
+
+    def url_regex_exact_matched (self, regex, string):
+        reg = '^' + regex + '$'
+        return True if re.match(reg, string) != None else False
 
     def has_permission(self, request, view):
 
@@ -69,13 +74,11 @@ class IsAuthenticated(permissions.BasePermission):
         if user_context['is_administrator']:
             return True
 
-        
-        user = user_context
-
-        permissions = user['application']['permissions'] + user['application']['external_permissions']
+        permissions = user_context['application']['permissions'] + user_context['application']['external_permissions']
 
         return len(
-            list(filter(lambda item: item['url'] == inputs.get('client_path') and item['method'] == inputs.get('client_method'),
+            list(filter(lambda item: self.url_regex_exact_matched(item['url'], inputs.get('client_path'))
+                                 and item['method'] == inputs.get('client_method'),
                         permissions))
         ) > 0
 
