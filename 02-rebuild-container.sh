@@ -1,4 +1,4 @@
-source 000-configuration.conf
+source 0-configuration.sh
 
 echo "===============================================================";
 echo "====================== REMOVING CONTAINER =====================";
