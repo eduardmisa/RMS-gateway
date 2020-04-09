@@ -89,16 +89,16 @@ WSGI_APPLICATION = 'app.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-DATABASES = {
-    'default': {
-        'ENGINE': config['DATABASE']['DATABASE_ENGINE'],
-        'NAME': config['DATABASE']['DATABASE_NAME'],
-        'USER': config['DATABASE']['DATABASE_USER'],
-        'PASSWORD': config['DATABASE']['DATABASE_PASSWORD'],
-        'HOST': config['DATABASE']['DATABASE_HOST'],
-        'PORT': config['DATABASE']['DATABASE_PORT'],
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': config['DATABASE']['DATABASE_ENGINE'],
+#         'NAME': config['DATABASE']['DATABASE_NAME'],
+#         'USER': config['DATABASE']['DATABASE_USER'],
+#         'PASSWORD': config['DATABASE']['DATABASE_PASSWORD'],
+#         'HOST': config['DATABASE']['DATABASE_HOST'],
+#         'PORT': config['DATABASE']['DATABASE_PORT'],
+#     }
+# }
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
