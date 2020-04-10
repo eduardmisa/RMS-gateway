@@ -47,9 +47,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_filters',
 
-    'applicationlayer',
-    'datalayer',
-    'entities'
+    'applicationlayer'
 ]
 
 MIDDLEWARE = [
@@ -63,7 +61,6 @@ MIDDLEWARE = [
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     # 'corsheaders.middleware.CorsMiddleware',
-    'middleware.current_user.main.CurrentUserMiddleware'
 ]
 
 ROOT_URLCONF = 'app.urls'
@@ -127,14 +124,10 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'middleware.security.IsAuthenticated',
-        # 'middleware.security.AllowAny',
     ],
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        # 'middleware.security.GatewayContextAuthentication'
-    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [],
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_PAGINATION_CLASS': 'applicationlayer.paginator.SimplePageNumberPagination',
-    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
     'UNAUTHENTICATED_USER': None
 }

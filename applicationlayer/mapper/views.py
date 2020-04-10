@@ -3,7 +3,6 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from middleware.security import AllowAny
 from django.shortcuts import render
-from entities import models
 from django.db.models import F, Q, Sum
 from django.utils.crypto import get_random_string
 from datetime import datetime, timedelta

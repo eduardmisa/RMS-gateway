@@ -1,36 +1,12 @@
-from middleware.current_user.data import set_current_user
 from rest_framework.authentication import TokenAuthentication
 from rest_framework import exceptions
 from rest_framework import permissions
 from datetime import datetime, timedelta
 from django.conf import settings
-from entities import models
 from applicationlayer import utils
 from django.conf import settings
 import requests
 import re
-
-
-# class GatewayContextAuthentication(TokenAuthentication):
-#     keyword = 'Bearer'
-
-#     def authenticate_credentials(self, key):
-
-#         user_context = None
-
-#         # FETCH current user's context
-#         response = requests.get(settings.SERVICE_CONTEXT_HOST + '/api/v1/auth/current-user-context/', headers={"Authorization": self.keyword + ' ' + key})
-
-#         if response.status_code == 200:
-#             user_context = response.json()
-#         else:
-#             message = response.json()
-#             if 'detail' in message:
-#                 message = message['detail']
-
-#             raise exceptions.AuthenticationFailed(message)
-
-#         return (user_context, key)
 
 
 class IsAuthenticated(permissions.BasePermission):  
