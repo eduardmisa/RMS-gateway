@@ -47,7 +47,7 @@ class IsAuthenticated(permissions.BasePermission):
         if not user_context:
             return False
 
-        if user_context['is_administrator']:
+        if user_context['is_superuser']:
             return True
 
         permissions = user_context['application']['permissions'] + user_context['application']['external_permissions']
