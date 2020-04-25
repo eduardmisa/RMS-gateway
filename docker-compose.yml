@@ -3,13 +3,16 @@ version: '3'
 services:
   rms_gateway_service:
     image: rms_gateway_image:latest
-    build: .
-    command: python manage.py runserver 0.0.0.0:8002
     container_name: rms_gateway_container
     volumes:
       - .:/rms_gateway_volume
     ports:
       - "8002:8002"
+    build: .
+    command: python manage.py runserver 0.0.0.0:8002
+    networks:
+      rms_network:
+          ipv4_address:  http://192.168.16.3
 
 networks:
     default:
