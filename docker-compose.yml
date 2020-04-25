@@ -12,9 +12,8 @@ services:
     command: python manage.py runserver 0.0.0.0:8002
     networks:
       rms_network:
-          ipv4_address:  http://192.168.16.3
+          ipv4_address:  192.168.16.3
 
 networks:
-    default:
-        external:
-            name: rms_network
+  rms_network:
+    external: true
