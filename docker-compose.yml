@@ -8,6 +8,7 @@ services:
       - .:/rms_gateway_volume
     ports:
       - "8002:8002"
+    restart: always
     build: .
     command: python manage.py runserver 0.0.0.0:8002
     networks:
