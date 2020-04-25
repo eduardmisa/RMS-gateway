@@ -12,7 +12,7 @@ services:
     command: python manage.py runserver 0.0.0.0:8002
     networks:
       rms_network:
-          ipv4_address:  192.168.16.3
+          ipv4_address:  172.18.0.3
 
 networks:
   rms_network:
