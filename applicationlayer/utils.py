@@ -1,4 +1,5 @@
 from django.conf import settings
+import requests
 
 def get_request_values(request):
 
@@ -15,7 +16,25 @@ def get_request_values(request):
     if query:
         query = "?" + query
 
-    target_destination = settings.SERVICE_CONTEXT_HOST + client_path + query
+    destination_url = ""
+    token = ""
+    
+    if "Authorization" in client_header and "Bearer" in client_header["Authorization"]:
+        token = client_header["Authorization"].replace("Bearer ", "")
+    elif "Authorization" in client_header:
+        token = client_header["Authorization"]
+    else:
+        pass
+
+    if client_path == "/api/v1/auth/current-user-context/" or client_path == "/api/v1/auth/login/":
+        destination_url = settings.SERVICE_CONTEXT_HOST
+    else:
+        response = requests.get(url=settings.SERVICE_CONTEXT_HOST + '/api/v1/auth/destination-url/?url='+client_path,
+                                headers={"Authorization": 'Bearer ' + token})
+        response_body = response.json()
+        destination_url = response_body["destination"]
+
+    target_destination = destination_url + client_path + query
 
     return {"client_header": client_header,
             "client_body": client_body,
