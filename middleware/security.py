@@ -50,7 +50,7 @@ class IsAuthenticated(permissions.BasePermission):
         if user_context['is_superuser']:
             return True
 
-        permissions = user_context['application']['permissions'] + user_context['application']['external_permissions']
+        permissions = user_context['application']['api_urls']
 
         return len(
             list(filter(lambda item: self.url_regex_exact_matched(item['url'], inputs.get('client_path'))
