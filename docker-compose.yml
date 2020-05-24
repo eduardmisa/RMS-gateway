@@ -7,10 +7,10 @@ services:
     volumes:
       - .:/rms_gateway_volume
     ports:
-      - "8002:8002"
+      - "8001:8000"
     restart: always
     build: .
-    command: python manage.py runserver 0.0.0.0:8002
+    command: python manage.py runserver 0.0.0.0:8000
     networks:
       rms_network:
           ipv4_address:  172.18.0.3
