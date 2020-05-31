@@ -11,6 +11,7 @@ from django.conf import settings
 import bcrypt
 import copy
 import requests
+import json
 # from requests import Request, Session
 
 
@@ -28,9 +29,12 @@ class EntryPoint(APIView):
             token = auth.replace('Bearer ', '')
 
         if token:
-            return {"Authorization": 'Bearer ' + token}
+            return {
+                "content-type": "application/json",
+                "Authorization": 'Bearer ' + token
+                }
         else:
-            return {}
+            return { "content-type": "application/json" }
 
     def return_request(self, response):
         response_body = None
@@ -55,7 +59,7 @@ class EntryPoint(APIView):
         return self.return_request(
             requests.post(
                 url=values.get('target_destination'),
-                data=values.get('client_body'),
+                data=json.dumps(values.get('client_body')),
                 headers=self.get_request_headers(request)
             )
         )
@@ -65,7 +69,7 @@ class EntryPoint(APIView):
         return self.return_request(
             requests.put(
                 url=values.get('target_destination'),
-                data=values.get('client_body'),
+                data=json.dumps(values.get('client_body')),
                 headers=self.get_request_headers(request)
             )
         )
@@ -75,7 +79,7 @@ class EntryPoint(APIView):
         return self.return_request(
             requests.patch(
                 url=values.get('target_destination'),
-                data=values.get('client_body'),
+                data=json.dumps(values.get('client_body')),
                 headers=self.get_request_headers(request)
             )
         )
